@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUTELLA 能多益 | 晨光與美味的幸福魔法</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        nutella: {
+                            red: '#D91424',
+                            darkred: '#B5101E',
+                            brown: '#2C1810',
+                            darkbrown: '#1A0F0A',
+                            gold: '#D4AF37',
+                            cream: '#F9F6F0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Noto Sans TC', 'sans-serif'],
+                        serif: ['Cinzel', 'Noto Sans TC', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #1A0F0A;
+            color: #F9F6F0;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1A0F0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4A2E24;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D91424;
+        }
+
+        .glass-panel {
+            background: rgba(44, 24, 16, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg) translateY(-100%);
+            transition: transform 0.7s ease-in-out;
+        }
+        .shimmer-btn:hover::after {
+            transform: rotate(30deg) translateY(100%);
+        }
+
+        .card-hover {
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(217, 20, 36, 0.25);
+        }
+    </style>
+</head>
+<body class="selection:bg-nutella-red selection:text-white">
+
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-nutella-red via-nutella-gold to-amber-400 z-50 transition-all duration-150" style="width: 0%;"></div>
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-40 transition-all duration-300 py-6 px-6 lg:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#home" class="group flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-nutella-red to-nutella-gold p-[2px] transition-transform duration-500 group-hover:rotate-12 shadow-lg">
+                    <div class="w-full h-full bg-nutella-darkbrown rounded-full flex items-center justify-center">
+                        <span class="font-serif font-black text-xl text-nutella-red">N</span>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl font-bold tracking-widest text-white group-hover:text-nutella-red transition-colors">NUTELLA</span>
+                    <span class="text-[10px] tracking-widest text-nutella-gold uppercase font-mono">能多益 品牌企劃</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 glass-panel px-8 py-3 rounded-full shadow-lg border border-nutella-gold/20">
+                <a href="#story" class="text-sm font-medium text-gray-300 hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-nutella-red hover:after:w-full after:transition-all">品牌故事 Story</a>
+                <a href="#strategy" class="text-sm font-medium text-gray-300 hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-nutella-red hover:after:w-full after:transition-all">策略企劃 Strategy</a>
+                <a href="#products" class="text-sm font-medium text-gray-300 hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-nutella-red hover:after:w-full after:transition-all">經典產品 Products</a>
+                <a href="#recipes" class="text-sm font-medium text-gray-300 hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-nutella-red hover:after:w-full after:transition-all">美味靈感 Recipes</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button id="btn-ai-log" title="檢視 AI 協作企劃紀錄" class="flex items-center gap-2 glass-panel px-4 py-2 rounded-full border border-nutella-red/40 text-xs font-medium text-nutella-cream hover:bg-nutella-red hover:text-white transition-all shadow-md">
+                    <i class="fa-solid fa-robot"></i>
+                    <span>企劃與 AI 紀錄</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-20 filter blur-[3px] transform scale-105"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-nutella-darkbrown via-nutella-darkbrown/85 to-transparent"></div>
+            <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-nutella-red/15 rounded-full filter blur-[140px]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center space-y-8">
+            <div id="hero-badge" class="opacity-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-panel border border-nutella-gold/30 text-xs tracking-widest text-nutella-gold uppercase shadow-xl">
+                <span class="w-2.5 h-2.5 rounded-full bg-nutella-red animate-ping"></span>
+                Spread The Joy • 傳遞早晨的幸福魔法
+            </div>
+
+            <h1 id="hero-title" class="opacity-0 font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-tight">
+                點亮早晨的 <span class="text-transparent bg-clip-text bg-gradient-to-r from-nutella-red via-orange-500 to-nutella-gold">美味靈魂</span>
+            </h1>
+
+            <p id="hero-subtitle" class="opacity-0 max-w-2xl text-base sm:text-lg text-gray-300 font-light leading-relaxed">
+                嚴選優質榛果與香濃可可完美交織，每一口都是喚醒溫暖與活力的幸福魔法。探索 Nutella 的品牌故事、核心策略與經典美味。
+            </p>
+
+            <div id="hero-cta" class="opacity-0 flex flex-wrap items-center justify-center gap-4 pt-4">
+                <a href="#story" class="shimmer-btn px-8 py-4 rounded-full bg-gradient-to-r from-nutella-red to-nutella-darkred hover:from-red-600 hover:to-red-800 text-white font-semibold shadow-2xl hover:shadow-nutella-red/50 transition-all transform hover:-translate-y-1 flex items-center gap-3">
+                    <span>探索品牌故事</span>
+                    <i class="fa-solid fa-arrow-down text-xs"></i>
+                </a>
+                <a href="#strategy" class="px-8 py-4 rounded-full glass-panel border border-nutella-gold/30 text-white font-semibold hover:bg-white/10 transition-all transform hover:-translate-y-1 flex items-center gap-3">
+                    <i class="fa-solid fa-chart-pie text-nutella-gold"></i>
+                    <span>檢視品牌策略企劃</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="story" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-6 space-y-6">
+                <span class="inline-block px-3 py-1 rounded bg-nutella-red/20 text-nutella-red text-xs font-mono uppercase tracking-widest border border-nutella-red/30">ORIGIN & HERITAGE 品牌起源</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight">
+                    源自義大利皮埃蒙特的<br>
+                    <span class="text-nutella-gold">傳奇甜美智慧</span>
+                </h2>
+                <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                    故事始於二次大戰後的義大利皮埃蒙特。當時可可豆極度短缺，糕點師 Pietro Ferrero 展現非凡的創意，將當地盛產、品質頂級的榛果加入少量可可中，調配出質地滑順、香氣濃郁的榛果可可抹醬。
+                </p>
+                <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                    這份源自智慧與熱情的美味，打破了傳統限制，並在 1964 年正式命名為 <strong>Nutella</strong>。如今，它已成為全球數億家庭早餐桌上不可或缺的快樂源泉。
+                </p>
+                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-800">
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-nutella-red">1964</span>
+                        <span class="text-xs text-gray-400">官方正式誕生年份</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-nutella-gold">100%</span>
+                        <span class="text-xs text-gray-400">精選優質嚴選榛果</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-white">160+</span>
+                        <span class="text-xs text-gray-400">熱銷全球國家</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 relative">
+                <div class="relative rounded-3xl overflow-hidden border border-nutella-gold/30 shadow-2xl glass-panel p-2">
+                    <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1000&auto=format&fit=crop" alt="Nutella Heritage" class="w-full h-[450px] object-cover rounded-2xl filter contrast-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-nutella-darkbrown/90 via-transparent to-transparent rounded-2xl"></div>
+                    <div class="absolute bottom-8 left-8 right-8">
+                        <span class="text-xs font-mono text-nutella-gold uppercase">// TRADITION & QUALITY</span>
+                        <h3 class="font-serif text-xl font-bold text-white mt-1">每一罐 Nutella 都是匠心與熱情的結晶</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="strategy" class="py-24 px-6 lg:px-12 bg-gradient-to-b from-nutella-darkbrown to-[#120A07] border-y border-nutella-gold/20">
+        <div class="max-w-7xl mx-auto space-y-16">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="px-3 py-1 rounded bg-nutella-gold/10 text-nutella-gold text-xs font-mono uppercase tracking-widest border border-nutella-gold/30">STRATEGY & VALUE 品牌策略企劃</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white">核心戰略與品牌定位</h2>
+                <p class="text-gray-300 text-sm sm:text-base">
+                    透過系統化的品牌 4W 策略與核心價值解構，持續深化消費者對「早晨幸福感」的情感連結。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-panel p-8 rounded-2xl card-hover border border-nutella-gold/20 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-nutella-red/20 text-nutella-red flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-white">Who (目標受眾)</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        愛好巧克力與榛果抹醬、重視生活儀式感、喜愛與家人朋友分享美味時光的消費者與家庭。
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl card-hover border border-nutella-gold/20 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-nutella-gold/20 text-nutella-gold flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-white">What (核心產品)</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        滑順濃郁的經典榛果可可醬及其衍生便利零食（B-ready、& Go!），提供優質早餐與點心解決方案。
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl card-hover border border-nutella-gold/20 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-white">Why (品牌存在價值)</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        繁忙生活中需要簡單且瞬間帶來幸福感的元素；Nutella 不僅是抹醬，更是拉近距離的溫暖橋樑。
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl card-hover border border-nutella-gold/20 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-white">How (溝通方式)</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        溫暖親切的語調、食慾感十足的視覺、創意食譜分享，傳遞「Spread Joy 傳遞快樂」的品牌理念。
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-nutella-gold/30 text-center relative overflow-hidden">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-nutella-red/10 rounded-full filter blur-[80px]"></div>
+                <div class="relative z-10 max-w-3xl mx-auto space-y-4">
+                    <span class="text-xs font-mono text-nutella-gold uppercase tracking-widest">// BRAND PROPOSITION 品牌金句</span>
+                    <blockquote class="font-serif text-2xl sm:text-3xl text-white font-bold leading-relaxed">
+                        「我們是一個『傳遞溫暖與晨光活力』的抹醬品牌，透過『嚴選榛果與濃郁可可的完美融合』，讓全世界愛好巧克力的人都能在每一天開啟幸福滿載的美味時刻。」
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+            <span class="px-3 py-1 rounded bg-nutella-red/20 text-nutella-red text-xs font-mono uppercase tracking-widest border border-nutella-red/30">CLASSIC PRODUCTS 經典系列產品</span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white">滿足各種美好時刻的美味選擇</h2>
+            <p class="text-gray-300 text-sm sm:text-base">從經典玻璃罐裝到隨手便利包裝，隨時隨地享受濃郁滑順的榛果可可香氣。</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-panel rounded-3xl overflow-hidden border border-nutella-gold/20 card-hover flex flex-col justify-between">
+                <div class="h-64 overflow-hidden bg-nutella-darkbrown/60 relative flex items-center justify-center p-6">
+                    <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=600&auto=format&fit=crop" alt="Nutella Classic Jar" class="max-h-full object-contain filter drop-shadow-2xl transition-transform duration-500 hover:scale-110">
+                    <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-nutella-red text-white text-[10px] font-mono tracking-wider uppercase">經典暢銷</span>
+                </div>
+                <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Nutella 經典榛果可可醬</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            嚴選優質榛果、脫脂奶粉與可可成分，質地滑順、濃郁香醇，塗抹於吐司、鬆餅或搭配水果的最佳靈魂伴侶。
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-800 flex items-center justify-between">
+                        <span class="text-xs font-mono text-nutella-gold">容量：350g / 750g / 1kg</span>
+                        <button onclick="showToast('已加入收藏清單！')" class="px-4 py-2 rounded-xl bg-nutella-red hover:bg-red-700 text-white text-xs font-medium transition-all">
+                            了解詳情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-3xl overflow-hidden border border-nutella-gold/20 card-hover flex flex-col justify-between">
+                <div class="h-64 overflow-hidden bg-nutella-darkbrown/60 relative flex items-center justify-center p-6">
+                    <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop" alt="Nutella B-ready" class="max-h-full object-contain filter drop-shadow-2xl transition-transform duration-500 hover:scale-110">
+                    <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-nutella-gold text-nutella-darkbrown font-bold text-[10px] font-mono tracking-wider uppercase">酥脆隨身</span>
+                </div>
+                <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Nutella B-ready 威化棒</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            外層酥脆的烘焙威化餅乾，內含滿滿經典 Nutella 榛果可可醬與香脆麥芽脆粒，隨時隨地享受酥脆驚喜。
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-800 flex items-center justify-between">
+                        <span class="text-xs font-mono text-nutella-gold">規格：單支獨立包裝 / 6入裝</span>
+                        <button onclick="showToast('已加入收藏清單！')" class="px-4 py-2 rounded-xl bg-nutella-red hover:bg-red-700 text-white text-xs font-medium transition-all">
+                            了解詳情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-3xl overflow-hidden border border-nutella-gold/20 card-hover flex flex-col justify-between">
+                <div class="h-64 overflow-hidden bg-nutella-darkbrown/60 relative flex items-center justify-center p-6">
+                    <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=600&auto=format&fit=crop" alt="Nutella & Go" class="max-h-full object-contain filter drop-shadow-2xl transition-transform duration-500 hover:scale-110">
+                    <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-orange-500 text-white text-[10px] font-mono tracking-wider uppercase">雙享沾醬杯</span>
+                </div>
+                <div class="p-8 space-y-4 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Nutella & Go! 隨手杯</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            一面是香濃滑順的 Nutella 榛果可可醬，另一面是香脆美味的卡滋棒。完美比例，讓外出時光也能輕鬆享受美味。
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-800 flex items-center justify-between">
+                        <span class="text-xs font-mono text-nutella-gold">規格：52g 便捷杯裝</span>
+                        <button onclick="showToast('已加入收藏清單！')" class="px-4 py-2 rounded-xl bg-nutella-red hover:bg-red-700 text-white text-xs font-medium transition-all">
+                            了解詳情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="recipes" class="py-24 px-6 lg:px-12 bg-nutella-darkbrown/80 border-t border-nutella-gold/20">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <span class="px-3 py-1 rounded bg-nutella-gold/10 text-nutella-gold text-xs font-mono uppercase tracking-widest border border-nutella-gold/30">RECIPE INSPIRATIONS 創意美味靈感</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mt-2">晨光早安與午後甜點提案</h2>
+                </div>
+                <p class="text-gray-300 max-w-md text-sm">
+                    發掘 Nutella 的無限可能！搭配新鮮水果、烘焙吐司或鬆餅，為每一天創造驚喜。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-panel rounded-2xl overflow-hidden border border-nutella-gold/20 group cursor-pointer" onclick="showToast('已開啟「香蕉莓果晨光吐司」食譜細節！')">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Recipe 1">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nutella-darkbrown via-transparent to-transparent"></div>
+                        <span class="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-nutella-red text-white text-xs font-mono">早餐提案</span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="font-serif text-xl font-bold text-white group-hover:text-nutella-gold transition-colors">香蕉莓果晨光吐司</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">厚切全麥吐司烘烤至金黃，抹上厚厚一層 Nutella，鋪上新鮮香蕉切片與草莓，灑上少許碎堅果。</p>
+                        <div class="text-xs font-mono text-nutella-gold pt-2">準備時間：5分鐘 • 難易度：簡單</div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-2xl overflow-hidden border border-nutella-gold/20 group cursor-pointer" onclick="showToast('已開啟「經典法式可可鬆餅」食譜細節！')">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Recipe 2">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nutella-darkbrown via-transparent to-transparent"></div>
+                        <span class="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-nutella-gold text-nutella-darkbrown font-bold text-xs font-mono">下午茶提案</span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="font-serif text-xl font-bold text-white group-hover:text-nutella-gold transition-colors">經典法式鬆餅塔</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">層層疊疊的鬆軟手作鬆餅，每一層淋上溫熱流動的 Nutella 可可醬，搭配糖粉與薄荷葉點綴。</p>
+                        <div class="text-xs font-mono text-nutella-gold pt-2">準備時間：15分鐘 • 難易度：中等</div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-2xl overflow-hidden border border-nutella-gold/20 group cursor-pointer" onclick="showToast('已開啟「榛果可可燕麥能量碗」食譜細節！')">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1517673132405-a56a62b18caf?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Recipe 3">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nutella-darkbrown via-transparent to-transparent"></div>
+                        <span class="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-orange-600 text-white text-xs font-mono">活力提案</span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="font-serif text-xl font-bold text-white group-hover:text-nutella-gold transition-colors">榛果可可燕麥能量碗</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">以希臘優格與燕麥為基底，加入奇亞籽與藍莓，最後淋上一圈誘人的 Nutella 醬，營養與美味兼具。</p>
+                        <div class="text-xs font-mono text-nutella-gold pt-2">準備時間：8分鐘 • 難易度：簡單</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 px-6 bg-nutella-darkbrown border-t border-nutella-gold/20 text-center text-xs text-gray-400">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-nutella-red flex items-center justify-center text-white font-serif font-bold text-sm">N</div>
+                <span class="font-serif text-white font-bold tracking-wider">NUTELLA BRAND PORTFOLIO</span>
+            </div>
+            <p>© 2026 Nutella Brand Strategy & Experience. Built for Immersive Showcase.</p>
+            <div class="flex items-center gap-4 text-lg">
+                <a href="#" class="hover:text-nutella-red transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-nutella-red transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-nutella-red transition-colors"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Log Drawer -->
+    <div id="ai-log-drawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden justify-end transition-opacity duration-300">
+        <div class="w-full max-w-xl bg-nutella-darkbrown h-full p-6 sm:p-8 overflow-y-auto border-l border-nutella-gold/30 space-y-6">
+            <div class="flex items-center justify-between border-b border-nutella-gold/20 pb-4">
+                <div class="flex items-center gap-3 text-nutella-gold">
+                    <i class="fa-solid fa-robot text-xl"></i>
+                    <h3 class="font-serif text-xl font-bold text-white">AI 協作與企劃紀錄 Log</h3>
+                </div>
+                <button id="btn-close-ai-log" class="p-2 text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl space-y-2 text-xs border border-nutella-gold/20">
+                <div class="font-bold text-nutella-gold uppercase">Workflow Summary 品牌建置總覽</div>
+                <p class="text-gray-300">本企劃由 AI 助理與使用者協作完成。從 Nutella 品牌歷史與起源（Phase 01）到 4W 品牌策略與定位金句（Phase 02），並轉化為具備現代精緻視覺與互動體驗的單頁品牌網站（Phase 03-05）。</p>
+            </div>
+
+            <div class="space-y-6 text-xs">
+                <div class="p-4 rounded-xl border border-nutella-gold/20 bg-nutella-brown/50 space-y-2">
+                    <div class="flex items-center justify-between text-nutella-gold font-mono">
+                        <span>STEP 01: 品牌基礎與歷史企劃</span>
+                        <span class="px-2 py-0.5 rounded bg-nutella-red/20 text-[10px] text-nutella-cream">Strategy</span>
+                    </div>
+                    <p class="text-gray-300 italic">「梳理 Nutella 自戰後義大利皮埃蒙特的起源、創辦人 Pietro Ferrero 的智慧，以及核心品牌價值與產品線。」</p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-nutella-gold/20 bg-nutella-brown/50 space-y-2">
+                    <div class="flex items-center justify-between text-nutella-gold font-mono">
+                        <span>STEP 02: 品牌策略與 4W 解析</span>
+                        <span class="px-2 py-0.5 rounded bg-nutella-red/20 text-[10px] text-nutella-cream">Positioning</span>
+                    </div>
+                    <p class="text-gray-300 italic">「精準定義 Who, What, Why, How，並產出富有情感連結的品牌金句與價值主張。」</p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-nutella-gold/20 bg-nutella-brown/50 space-y-2">
+                    <div class="flex items-center justify-between text-nutella-gold font-mono">
+                        <span>STEP 03: 互動網站與視覺實作</span>
+                        <span class="px-2 py-0.5 rounded bg-nutella-red/20 text-[10px] text-nutella-cream">Development</span>
+                    </div>
+                    <p class="text-gray-300 italic">「運用 Tailwind CSS、GSAP 動畫與玻璃擬態設計，建置高質感且流暢響應式的 Nutella 品牌官方展示網站。」</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast Box -->
+    <div id="toast" class="fixed bottom-8 right-8 z-50 glass-panel border border-nutella-gold px-6 py-4 rounded-xl text-sm text-white font-medium shadow-2xl hidden transform translate-y-10 opacity-0 transition-all duration-300">
+        Toast Message
+    </div>
+
+    <script>
+        // Toast Notification Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('hidden');
+            gsap.to(toast, { opacity: 1, y: 0, duration: 0.3 });
+
+            setTimeout(() => {
+                gsap.to(toast, {
+                    opacity: 0,
+                    y: 10,
+                    duration: 0.3,
+                    onComplete: () => toast.classList.add('hidden')
+                });
+            }, 3000);
+        }
+
+        // AI Log Drawer Setup
+        function setupAILogDrawer() {
+            const drawer = document.getElementById('ai-log-drawer');
+            const openBtn = document.getElementById('btn-ai-log');
+            const closeBtn = document.getElementById('btn-close-ai-log');
+
+            if (openBtn) {
+                openBtn.onclick = () => {
+                    drawer.classList.remove('hidden');
+                    drawer.classList.add('flex');
+                    gsap.fromTo(drawer.firstElementChild, { x: 300 }, { x: 0, duration: 0.3, ease: "power2.out" });
+                };
+            }
+
+            if (closeBtn) {
+                closeBtn.onclick = () => {
+                    gsap.to(drawer.firstElementChild, {
+                        x: 300,
+                        duration: 0.25,
+                        onComplete: () => {
+                            drawer.classList.add('hidden');
+                            drawer.classList.remove('flex');
+                        }
+                    });
+                };
+            }
+        }
+
+        // GSAP Animations & Scroll Progress
+        function initAnimations() {
+            window.addEventListener('scroll', () => {
+                const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scroll-progress').style.width = scrolled + '%';
+
+                const header = document.getElementById('main-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('bg-nutella-darkbrown/90', 'backdrop-blur-md', 'py-4', 'shadow-2xl');
+                    header.classList.remove('py-6');
+                } else {
+                    header.classList.remove('bg-nutella-darkbrown/90', 'backdrop-blur-md', 'py-4', 'shadow-2xl');
+                    header.classList.add('py-6');
+                }
+            });
+
+            gsap.to('#hero-badge', { opacity: 1, y: 0, duration: 0.8, delay: 0.2 });
+            gsap.to('#hero-title', { opacity: 1, y: 0, duration: 0.9, delay: 0.4 });
+            gsap.to('#hero-subtitle', { opacity: 1, y: 0, duration: 0.9, delay: 0.6 });
+            gsap.to('#hero-cta', { opacity: 1, y: 0, duration: 0.9, delay: 0.8 });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setupAILogDrawer();
+            initAnimations();
+        });
+    </script>
+</body>
+</html>
